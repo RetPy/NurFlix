@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model, logout
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import viewsets, generics, permissions, status, views
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
@@ -55,7 +55,7 @@ class TokenLoginAPIView(generics.GenericAPIView):
         })
 
 
-class TokenLogoutAPIView(generics.GenericAPIView):
+class TokenLogoutAPIView(views.APIView):
     def post(self, request):
         return self.logout(request)
 
