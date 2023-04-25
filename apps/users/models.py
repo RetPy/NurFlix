@@ -5,9 +5,13 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     bio = models.TextField(
         max_length=100,
+        null=True,
+        blank=True,
     )
     avatar = models.ImageField(
         upload_to='user_avatar/',
+        null=True,
+        blank=True,
     )
     liked_actor = models.ForeignKey(
         'titles.Person',
