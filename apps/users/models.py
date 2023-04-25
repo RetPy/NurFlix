@@ -37,6 +37,8 @@ class User(AbstractUser):
     watched_titles = models.ManyToManyField(
         'titles.Title',
         related_name='user_watched',
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
