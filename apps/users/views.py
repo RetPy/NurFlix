@@ -52,6 +52,7 @@ class TokenLoginAPIView(generics.GenericAPIView):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
+            'status': 1 if user.is_superuser else 2,
         })
 
 
