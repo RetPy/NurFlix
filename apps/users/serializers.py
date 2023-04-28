@@ -17,6 +17,7 @@ class UserFollowingSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     followings = UserFollowingSerializer(many=True, read_only=True)
     followers = UserFollowingSerializer(many=True, read_only=True)
+    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = User
