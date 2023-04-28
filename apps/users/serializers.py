@@ -39,9 +39,12 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if not validated_data['password']:
             raise serializers.ValidationError('Password can\'t be null!')
+        watched_titles = validated_data['watched_titles']
+        validated_data.pop('watched_titles')
         user = User(**validated_data)
         user.set_password(validated_data['password'])
         user.save()
+        user.watched_titles.set(watched_titles)
         return user
 
 
