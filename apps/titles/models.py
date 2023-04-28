@@ -26,6 +26,8 @@ class Person(models.Model):
     )
     avatar = models.ImageField(
         upload_to='person_image',
+        null=True,
+        blank=True,
     )
     bio = models.TextField()
     age = models.PositiveIntegerField(
