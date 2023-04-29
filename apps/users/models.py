@@ -12,6 +12,7 @@ class User(AbstractUser):
         upload_to='user_avatar/',
         null=True,
         blank=True,
+        default='default_avatar.png'
     )
     liked_actor = models.ForeignKey(
         'titles.Person',
