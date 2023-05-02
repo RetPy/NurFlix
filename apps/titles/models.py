@@ -82,7 +82,9 @@ class Title(models.Model):
         related_name='title_director',
     )
     poster = models.ImageField(
-        upload_to='title_image/'
+        upload_to='title_image/',
+        null=True,
+        blank=True,
     )
     release_date = models.DateField()
     trailer_url = models.URLField()
