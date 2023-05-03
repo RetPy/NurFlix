@@ -1,9 +1,16 @@
 from django.contrib import admin
 
-from apps.titles.models import Genres, Person, Title, Franchises, Reviews
+from apps.titles.models import Genres, Person, Title, Franchises, Reviews, Country
 
 
 @admin.register(Genres)
+class GenresAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    list_display_links = ('id', 'name')
+    search_fields = ('id', 'name')
+
+
+@admin.register(Country)
 class GenresAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
