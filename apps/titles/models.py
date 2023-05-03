@@ -17,15 +17,6 @@ class Genres(models.Model):
         return self.name
 
 
-class Country(models.Model):
-    name = models.CharField(
-        max_length=255,
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class Person(models.Model):
     first_name = models.CharField(
         max_length=255,
@@ -97,13 +88,12 @@ class Title(models.Model):
     )
     release_date = models.DateField()
     trailer_url = models.URLField()
-    country = models.ManyToManyField(
-        Country,
-        related_name='title_country',
+    country = models.CharField(
+        max_length=255,
     )
     budget = models.IntegerField()
-    age_limit = models.CharField(
-        max_length=15
+    age_limit = models.PositiveIntegerField(
+        default=0,
     )
     # -film
     film_time = models.PositiveIntegerField(
