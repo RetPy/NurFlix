@@ -2,8 +2,8 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from apps.users.views import UserViewSet, FollowUserAPIView, UnfollowUserAPIView, TokenLogoutAPIView, TokenLoginAPIView
-from apps.titles.views import GenresViewSet, PersonViewSet, FilmViewSet, SeriesViewSet, FranchisesViewSet, ReviewViewSet
-
+from apps.titles.views import GenresViewSet, PersonViewSet, FilmViewSet, SeriesViewSet, FranchisesViewSet, \
+    ReviewViewSet, CountryViewSet
 
 router = DefaultRouter()
 router.register(
@@ -40,6 +40,11 @@ router.register(
     'review',
     ReviewViewSet,
     basename='review'
+)
+router.register(
+    'country',
+    CountryViewSet,
+    basename='country'
 )
 
 urlpatterns = [
