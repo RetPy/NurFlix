@@ -1,11 +1,17 @@
 from rest_framework import serializers
 
-from apps.titles.models import Genres, Person, Title, Franchises, Reviews
+from apps.titles.models import Genres, Person, Title, Franchises, Reviews, Country
 
 
 class GenresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genres
+        fields = '__all__'
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
         fields = '__all__'
 
 
