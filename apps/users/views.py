@@ -53,6 +53,7 @@ class TokenLoginAPIView(generics.GenericAPIView):
         return Response({
             'token': token.key,
             'status': 1 if user.is_superuser else 2,
+            'user_id': user.id,
         })
 
 
