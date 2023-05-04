@@ -53,7 +53,15 @@ class TokenLoginAPIView(generics.GenericAPIView):
         return Response({
             'token': token.key,
             'status': 1 if user.is_superuser else 2,
-            'user_id': user.id,
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'bio': user.bio,
+            'avatar': f'{request.build_absolute_uri().replace("/user/token/create/", "")}{user.avatar.url}',
+            'liked_actor': user.liked_actor,
+            'liked_title': user.liked_title,
+            'liked_director': user.liked_director,
+            'watched_titles': [wt.id for wt in user.watched_titles.all()],
         })
 
 
