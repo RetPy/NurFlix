@@ -90,8 +90,13 @@ class Title(models.Model):
         Person,
         related_name='title_director',
     )
-    poster = models.ImageField(
-        upload_to='title_image/',
+    v_poster = models.ImageField(
+        upload_to='title/v_poster/',
+        null=True,
+        blank=True,
+    )
+    h_poster = models.ImageField(
+        upload_to='title/h_poster/',
         null=True,
         blank=True,
     )
