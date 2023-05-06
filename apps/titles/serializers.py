@@ -49,7 +49,10 @@ class FilmSerializer(serializers.ModelSerializer):
 
     def get_total_score(self, obj):
         reviews = obj.review_title.all()
-        total_score = sum(i.score for i in reviews) / len(reviews)
+        try:
+            total_score = sum(i.score for i in reviews) / len(reviews)
+        except ZeroDivisionError:
+            total_score = 0
         return total_score
 
 
@@ -82,7 +85,10 @@ class SeriesSerializer(serializers.ModelSerializer):
 
     def get_total_score(self, obj):
         reviews = obj.review_title.all()
-        total_score = sum(i.score for i in reviews) / len(reviews)
+        try:
+            total_score = sum(i.score for i in reviews) / len(reviews)
+        except ZeroDivisionError:
+            total_score = 0
         return total_score
 
 
