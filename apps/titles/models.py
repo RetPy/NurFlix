@@ -168,6 +168,9 @@ class Reviews(models.Model):
         related_name='review_title',
     )
     text = models.TextField()
+    score = models.PositiveSmallIntegerField(
+        default=1,
+    )
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
