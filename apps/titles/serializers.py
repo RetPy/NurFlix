@@ -55,6 +55,7 @@ class FilmSerializer(serializers.ModelSerializer):
 
 class SeriesSerializer(serializers.ModelSerializer):
     type = serializers.CharField(read_only=True)
+    total_score = serializers.SerializerMethodField()
 
     class Meta:
         model = Title
@@ -76,7 +77,13 @@ class SeriesSerializer(serializers.ModelSerializer):
             'episodes',
             'seasons',
             'series_time',
+            'total_score'
         )
+
+    def get_total_score(self, obj):
+        reviews = obj.review_title.all()
+        total_score = sum(i.score for i in reviews) / len(reviews)
+        return total_score
 
 
 class FranchisesSerializer(serializers.ModelSerializer):
