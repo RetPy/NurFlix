@@ -47,7 +47,7 @@ class CountryViewSet(viewsets.ModelViewSet):
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-    search_fields = ('name',)
+    search_fields = ('first_name', 'last_name')
     permission_classes_by_action = {
         'list': [permissions.IsAuthenticated],
         'create': [permissions.IsAdminUser],
