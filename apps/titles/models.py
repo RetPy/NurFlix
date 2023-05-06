@@ -8,9 +8,14 @@ class Genres(models.Model):
     name = models.CharField(
         max_length=255,
     )
-    description = models.TextField()
+    description = models.TextField(
+        null=True,
+        blank=True,
+    )
     picture = models.ImageField(
         upload_to='genres/',
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
