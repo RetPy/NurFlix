@@ -6,9 +6,8 @@ from apps.users.models import UserFollowing
 User = get_user_model()
 
 
-class UserFollowingSerializer(serializers.ModelSerializer):
+class UserFollowBaseSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
-    following_info = serializers.SerializerMethodField()
 
     class Meta:
         model = UserFollowing
@@ -16,11 +15,40 @@ class UserFollowingSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'following',
-            'following_info',
         )
 
-    def get_following_info(self, obj):
-        user = User.objects.get(id=obj.following.id)
+
+class UserFollowingSerializer(serializers.ModelSerializer):
+    following = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserFollowing
+        fields = (
+            'id',
+            'following',
+        )
+
+    def get_following(self, obj):
+        user = obj.following
+        return {
+            'id': user.id,
+            'username': user.username,
+            'avatar': user.avatar.url,
+        }
+
+
+class UserFollowerSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserFollowing
+        fields = (
+            'id',
+            'user',
+        )
+
+    def get_user(self, obj):
+        user = obj.user
         return {
             'id': user.id,
             'username': user.username,
@@ -63,8 +91,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_followers(self, obj):
         followers = obj.followers.all()
-        serializer = UserFollowingSerializer(followers, many=True)
-        # serializer.is_valid()
+        serializer = UserFollowerSerializer(followers, many=True)
         return serializer.data
 
 
