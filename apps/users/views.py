@@ -34,11 +34,29 @@ class FollowUserAPIView(generics.CreateAPIView):
     queryset = UserFollowing.objects.all()
     serializer_class = UserFollowingSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class UnfollowUserAPIView(generics.DestroyAPIView):
+
+class UnfollowUserAPIView(generics.GenericAPIView):
     queryset = UserFollowing.objects.all()
     serializer_class = UserFollowingSerializer
     permission_classes = (IsOwnerUser,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        unfollow_user = serializer.validated_data['following']
+        try:
+            UserFollowing.objects.get(user=self.request.user, following=unfollow_user).delete()
+            return Response({
+                'messsage': f'You unfollowed {unfollow_user}'
+            })
+        except ObjectDoesNotExist:
+            return Response({
+                'message': f'You are not followed to {unfollow_user}'
+            })
+
 
 
 class TokenLoginAPIView(generics.GenericAPIView):

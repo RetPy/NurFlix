@@ -48,8 +48,8 @@ router.register(
 )
 
 urlpatterns = [
-    path('user/follow/<int:pk>/', FollowUserAPIView.as_view()),
-    path('user/unfollow/<int:pk>/', UnfollowUserAPIView.as_view()),
+    path('user/follow/', FollowUserAPIView.as_view()),
+    path('user/unfollow/', UnfollowUserAPIView.as_view()),
     path('user/token/create/', TokenLoginAPIView.as_view()),
     path('user/token/logout/', TokenLogoutAPIView.as_view())
 ]

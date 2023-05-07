@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
+from django.core.serializers import serialize
 
 from apps.users.models import UserFollowing
 
@@ -15,8 +16,8 @@ class UserFollowingSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    followings = UserFollowingSerializer(many=True, read_only=True)
-    followers = UserFollowingSerializer(many=True, read_only=True)
+    following = UserFollowingSerializer(many=True, read_only=True)
+    followers = serializers.SerializerMethodField()
     avatar = serializers.ImageField(required=False)
 
     class Meta:
@@ -31,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
             'liked_title',
             'liked_director',
             'watched_titles',
-            'followings',
+            'following',
             'followers',
             'password',
         )
@@ -46,6 +47,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         user.watched_titles.set(watched_titles)
         return user
+
+    def get_followers(self, obj):
+        followers = obj.followers.all()
+        serializer = UserFollowingSerializer(followers, many=True)
+        # serializer.is_valid()
+        return serializer.data
 
 
 class LoginSerializer(serializers.Serializer):
