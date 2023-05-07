@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
-from django.core.serializers import serialize
 
 from apps.users.models import UserFollowing
 
@@ -9,10 +8,23 @@ User = get_user_model()
 
 class UserFollowingSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
+    following = serializers.SerializerMethodField()
 
     class Meta:
         model = UserFollowing
-        fields = '__all__'
+        fields = (
+            'id',
+            'user',
+            'following'
+        )
+
+    def get_following(self, obj):
+        user = User.objects.get(id=obj.following.id)
+        return {
+            'id': user.id,
+            'username': user.username,
+            'avatar': user.avatar.url,
+        }
 
 
 class UserSerializer(serializers.ModelSerializer):

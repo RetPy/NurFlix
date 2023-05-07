@@ -29,10 +29,20 @@ class UserViewSet(viewsets.ModelViewSet):
         except KeyError:
             return [permission() for permission in self.permission_classes]
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
 
 class FollowUserAPIView(generics.CreateAPIView):
     queryset = UserFollowing.objects.all()
     serializer_class = UserFollowingSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
