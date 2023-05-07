@@ -8,17 +8,18 @@ User = get_user_model()
 
 class UserFollowingSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
-    following = serializers.SerializerMethodField()
+    following_info = serializers.SerializerMethodField()
 
     class Meta:
         model = UserFollowing
         fields = (
             'id',
             'user',
-            'following'
+            'following',
+            'following_info',
         )
 
-    def get_following(self, obj):
+    def get_following_info(self, obj):
         user = User.objects.get(id=obj.following.id)
         return {
             'id': user.id,
