@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from apps.users.views import UserViewSet, FollowUserAPIView, UnfollowUserAPIView, TokenLogoutAPIView, TokenLoginAPIView
+from apps.users.views import UserViewSet, FollowUserAPIView, UnfollowUserAPIView, TokenLogoutAPIView, TokenLoginAPIView, \
+    UserPasswordUpdateAPIView
 from apps.titles.views import GenresViewSet, PersonViewSet, FilmViewSet, SeriesViewSet, FranchisesViewSet, \
     ReviewViewSet, CountryViewSet
 
@@ -50,6 +51,7 @@ router.register(
 urlpatterns = [
     path('user/follow/', FollowUserAPIView.as_view()),
     path('user/unfollow/', UnfollowUserAPIView.as_view()),
+    path('user/<int:pk>/change_password/', UserPasswordUpdateAPIView.as_view()),
     path('user/token/create/', TokenLoginAPIView.as_view()),
     path('user/token/logout/', TokenLogoutAPIView.as_view())
 ]

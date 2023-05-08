@@ -4,7 +4,8 @@ from rest_framework import viewsets, generics, permissions, status, views
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-from apps.users.serializers import UserSerializer, UserFollowBaseSerializer, LoginSerializer
+from apps.users.serializers import UserSerializer, UserFollowBaseSerializer, LoginSerializer, \
+    UserUpdatePasswordSerializer
 from apps.users.models import UserFollowing
 from utils.permissions import IsCurrentUser, IsOwnerUser
 
@@ -66,6 +67,12 @@ class UnfollowUserAPIView(generics.GenericAPIView):
             return Response({
                 'message': f'You are not followed to {unfollow_user}'
             })
+
+
+class UserPasswordUpdateAPIView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserUpdatePasswordSerializer
+    permission_classes = [IsCurrentUser | permissions.IsAdminUser]
 
 
 class TokenLoginAPIView(generics.GenericAPIView):
