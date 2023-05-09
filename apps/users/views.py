@@ -93,7 +93,8 @@ class TokenLoginAPIView(generics.GenericAPIView):
             'bio': user.bio,
             'avatar': f'{request.build_absolute_uri().replace("/user/token/create/", "")}{user.avatar.url}',
             'liked_actor': user.liked_actor.id if user.liked_actor else None,
-            'liked_title': user.liked_title.id if user.liked_title else None,
+            'liked_film': user.liked_film.id if user.liked_film else None,
+            'liked_series': user.liked_series.id if user.liked_series else None,
             'liked_director': user.liked_director.id if user.liked_director else None,
             'watched_titles': [wt.id for wt in user.watched_titles.all()],
         })

@@ -28,10 +28,17 @@ class User(AbstractUser):
         null=True,
         blank=True,
     )
-    liked_title = models.ForeignKey(
+    liked_film = models.ForeignKey(
         'titles.Title',
         on_delete=models.SET_NULL,
-        related_name='user_liked_title',
+        related_name='user_liked_film',
+        null=True,
+        blank=True,
+    )
+    liked_series = models.ForeignKey(
+        'titles.Title',
+        on_delete=models.SET_NULL,
+        related_name='user_liked_series',
         null=True,
         blank=True,
     )
